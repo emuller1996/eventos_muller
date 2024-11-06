@@ -4,8 +4,11 @@ import { useSelector } from 'react-redux'
 
 import { CSpinner, useColorModes } from '@coreui/react'
 import './scss/style.scss'
+import axios from 'axios'
+
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL
 
 import Toaster from 'react-hot-toast'
 import LandingLayout from './layout/LandingLayout'

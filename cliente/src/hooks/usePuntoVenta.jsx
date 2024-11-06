@@ -61,6 +61,5 @@ export const usePuntoVenta = () => {
     error,
     loading,
     getAllPuntoVenta,
-    getAllPuntoVenta
   }
 }

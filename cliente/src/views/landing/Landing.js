@@ -35,14 +35,14 @@ const Landing = () => {
             {ListFunciones &&
               ListFunciones.map((fun) => (
                 <div key={fun._id} className="col">
-                  <div className="card shadow-sm">
+                  <div className="card  h-100 shadow-sm">
                     <img
                       style={{ maxHeight: '300px' }}
                       src={fun.image}
                       className="card-img-top"
                       alt="..."
                     />
-                    <div className="card-body">
+                    <div className="card-body d-flex flex-column justify-content-between">
                       <h4>{fun.name}</h4>
                       <p className="card-text">{fun.end_date}</p>
                       <div className="d-flex justify-content-between align-items-center">

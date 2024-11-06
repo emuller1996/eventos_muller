@@ -3,9 +3,9 @@
 import axios from 'axios'
 
 export const postCrearOrdenService = (data) => {
-  return axios.post(`http://localhost:3001/ordenes/`, data)
+  return axios.post(`/ordenes/`, data)
 }
 
 export const getAllOrdenService = () => {
-  return axios.get('http://localhost:3001/ordenes')
+  return axios.get('/ordenes')
 }

@@ -8,11 +8,11 @@ export const postCreateClienteService = (data) => {
 
 
 export const getAllRecintosService = (data) => {
-  return axios.get("http://localhost:3001/recinto", data);
+  return axios.get("/recinto", data);
 };
 
 export const getAllEsquemasByRecintosService = (idRecinto) => {
-  return axios.get(`http://localhost:3001/recinto/${idRecinto}/esquemas`);
+  return axios.get(`/recinto/${idRecinto}/esquemas`);
 };
 
 

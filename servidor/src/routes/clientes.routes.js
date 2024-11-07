@@ -35,7 +35,6 @@ ClienteRouters.get("/", async (req, res) => {
     })
     clientes =  await Promise.all(clientes);
     /* return res.json(searchResult.body.hits); */
-    console.log(clientes);
     return res.status(200).json(clientes);
   } catch (error) {
     return res.status(500).json({ message: error.message });

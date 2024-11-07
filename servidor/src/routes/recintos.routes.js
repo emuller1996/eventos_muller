@@ -71,7 +71,6 @@ RecintosRouters.get("/:idRecinto/esquemas", async (req, res) => {
       };
     });
     /* return res.json(searchResult.body.hits); */
-    console.log(Recintos);
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -82,7 +81,6 @@ RecintosRouters.get("/", async (req, res) => {
   try {
     var Recintos = await buscarElasticByType("recinto");
     /* return res.json(searchResult.body.hits); */
-    console.log(Recintos);
     return res.status(200).json(Recintos);
   } catch (error) {
     return res.status(500).json({ message: error.message });

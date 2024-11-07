@@ -17,7 +17,6 @@ UsuariosRouters.get("/", async (req, res) => {
   try {
     var data = await buscarElasticByType("usuario");
     /* return res.json(searchResult.body.hits); */
-    console.log(data);
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -40,7 +39,7 @@ UsuariosRouters.post("/", async (req, res) => {
     const data = req.body;
     
     data.password = md5(data.password);
-    //const response = await crearElasticByType(data, "usuario");
+    const response = await crearElasticByType(data, "usuario");
     //recinto = response.body;
     return res.status(201).json({ message: "Usuario Creado.", recinto, data });
   } catch (error) {

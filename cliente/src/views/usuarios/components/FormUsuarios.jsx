@@ -6,7 +6,13 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 import { postCreatePuntoVentaService } from '../../../services/punto_venta.services'
 import { postCreateUsuariosService } from '../../../services/usuarios.services'
+import PropTypes from 'prop-types'
+
 export default function FormUsuarios({ onHide }) {
+
+  FormUsuarios.propTypes = {
+    onHide: PropTypes.func,
+  }
   const {
     register,
     handleSubmit,
@@ -21,7 +27,7 @@ export default function FormUsuarios({ onHide }) {
       const result = await postCreateUsuariosService(data)
       console.log(result.data);
       toast.success(result.data.message)
-     // onHide()
+     onHide()
     } catch (error) {
       console.log(error);
       
@@ -85,7 +91,7 @@ export default function FormUsuarios({ onHide }) {
           Cancelar
         </button>
         <Button type="submit" className="text-white" variant="success">
-          Guardar Punto Venta.
+          Guardar Usuario.
         </Button>
       </div>
     </form>

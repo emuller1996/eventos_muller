@@ -12,6 +12,9 @@ axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL
 
 import Toaster from 'react-hot-toast'
 import LandingLayout from './layout/LandingLayout'
+import Login from './views/login/Login'
+import { AuthProvider } from './context/AuthContext'
+import LoginProtected from './utils/LoginProtected'
 // Pages
 /* const Login = React.lazy(() => import('./views/pages/login/Login'))
 const Register = React.lazy(() => import('./views/pages/register/Register'))
@@ -38,22 +41,32 @@ const App = () => {
 
   return (
     <HashRouter>
-      <Suspense
-        fallback={
-          <div className="pt-3 text-center">
-            <CSpinner color="primary" variant="grow" />
-          </div>
-        }
-      >
-        <Routes>
-          {/* <Route exact path="/login" name="Login Page" element={<Login />} />
-          <Route exact path="/register" name="Register Page" element={<Register />} />
+      <AuthProvider>
+        <Suspense
+          fallback={
+            <div className="pt-3 text-center">
+              <CSpinner color="primary" variant="grow" />
+            </div>
+          }
+        >
+          <Routes>
+            <Route exact path="/login" name="Login Page" element={<Login />} />
+            {/*<Route exact path="/register" name="Register Page" element={<Register />} />
           <Route exact path="/404" name="Page 404" element={<Page404 />} />
           <Route exact path="/500" name="Page 500" element={<Page500 />} /> */}
-          <Route path="/*" name="Home" element={<LandingLayout />} />
-          <Route path="d/*" name="Home" element={<DefaultLayout />} />
-        </Routes>
-      </Suspense>
+            <Route path="/*" name="Home" element={<LandingLayout />} />
+            <Route
+              path="d/*"
+              name="Home"
+              element={
+                <LoginProtected>
+                  <DefaultLayout />
+                </LoginProtected>
+              }
+            />
+          </Routes>
+        </Suspense>
+      </AuthProvider>
     </HashRouter>
   )
 }

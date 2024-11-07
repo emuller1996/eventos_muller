@@ -6,6 +6,6 @@ export const postCrearOrdenService = (data) => {
   return axios.post(`/ordenes/`, data)
 }
 
-export const getAllOrdenService = () => {
-  return axios.get('/ordenes')
+export const getAllOrdenService = (data) => {
+  return axios.get('/ordenes',data)
 }

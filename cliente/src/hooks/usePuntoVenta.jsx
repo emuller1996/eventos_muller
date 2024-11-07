@@ -16,7 +16,7 @@ export const usePuntoVenta = () => {
     setLoading(true)
     setData([])
     try {
-      const res = await getAllPuntoVentaService()
+      const res = await getAllPuntoVentaService({signal:signal})
       if (res.status !== 200) {
         let err = new Error('Error en la petición Fetch')
         err.status = res.status || '00'
@@ -24,7 +24,6 @@ export const usePuntoVenta = () => {
         throw err
       }
       console.log(res)
-
       if (!signal.aborted) {
         setData(res.data)
         setError(null)
@@ -61,5 +60,6 @@ export const usePuntoVenta = () => {
     error,
     loading,
     getAllPuntoVenta,
+    abortController
   }
 }

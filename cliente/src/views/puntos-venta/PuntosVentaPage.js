@@ -12,10 +12,16 @@ const PuntosVentaPage = () => {
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
 
-  const { getAllPuntoVenta, data: ListPuntoVenta, loading } = usePuntoVenta()
+  const { getAllPuntoVenta, data: ListPuntoVenta, loading, abortController } = usePuntoVenta()
 
   useEffect(() => {
     getAllPuntoVenta()
+
+    return () => {
+      console.log('test')
+      console.log(abortController)
+      abortController.abort()
+    }
   }, [])
 
   return (
@@ -32,9 +38,21 @@ const PuntosVentaPage = () => {
           striped
           columns={[
             { name: 'Id', selector: (row) => row._id },
-            { name: 'Nombre', selector: (row) => row?.name ?? '' },
-            { name: 'Tipo', selector: (row) => row?.type_sales_point ?? '' },
-            { name: 'Direccion', selector: (row) => row?.address ?? '' },
+            { name: 'Nombre', selector: (row) => row?.name ?? '', width: '250px' },
+            {
+              name: 'Tipo',
+              selector: (row) => row?.type_sales_point ?? '',
+              cell: (row) => {
+                return (
+                  <>
+                    <span className="badge bg-primary text-uppercase">
+                      {row?.type_sales_point.replace('_', ' ')}
+                    </span>
+                  </>
+                )
+              },
+            },
+            { name: 'Direccion', selector: (row) => row?.address ?? '', width: '150px' },
             { name: 'Cuidad', selector: (row) => row?.city ?? '' },
           ]}
           data={ListPuntoVenta ?? []}

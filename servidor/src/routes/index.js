@@ -8,6 +8,9 @@ import BoletoRouters from "./boletos.routes.js";
 import OrdenesRouters from "./ordenes.routes.js";
 import PuntoVentaRouters from "./punto_venta.routes.js";
 import UsuariosRouters from "./usuarios.routes.js";
+import AuthRouters from "./auth.routes.js";
+
+
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -25,6 +28,8 @@ router.use("/boleto", BoletoRouters);
 router.use("/ordenes", OrdenesRouters);
 router.use("/punto_venta", PuntoVentaRouters);
 router.use("/usuarios", UsuariosRouters);
+router.use("/auth", AuthRouters);
+
 
 
 

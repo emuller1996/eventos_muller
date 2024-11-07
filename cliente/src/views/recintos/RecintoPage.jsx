@@ -58,7 +58,7 @@ export default function RecintoPage() {
                     <td>{recinto?.address}</td>
                     <td>
                       <div className="input-group mb-3">
-                          <Link className="btn btn-sm btn-outline-info" to={`/Recintos/${recinto._id}/esquemas`}>
+                          <Link className="btn btn-sm btn-outline-info" to={`/d/recintos/${recinto._id}/esquemas`}>
                           <i className="fa-solid fa-person-rays"></i>Esquemas
                           </Link>
                         <button className="btn btn-sm btn-outline-primary" type="button" id="">

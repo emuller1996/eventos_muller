@@ -15,7 +15,6 @@ FuncionesRouters.get("/", async (req, res) => {
   try {
     var funciones = await buscarElasticByType("funcion");
     /* return res.json(searchResult.body.hits); */
-    console.log(funciones);
     return res.status(200).json(funciones);
   } catch (error) {
     return res.status(500).json({ message: error.message });

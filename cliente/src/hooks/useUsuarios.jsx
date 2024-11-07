@@ -1,35 +1,22 @@
 /* eslint-disable prettier/prettier */
 
 import { useState } from 'react'
-import { getAllOrdenService } from '../services/ordenes.services'
+import { getAllUsuariosService } from '../services/usuarios.services'
 
-export const useOrden = () => {
-  const [data, setData] = useState(null)
-
+export const useUsuarios = () => {
+  const [data, setData] = useState([])
+  const [dataDetalle, setDataDetalle] = useState(null)
 
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
   const abortController = new AbortController()
   const signal = abortController.signal
 
-  /* const getAllOrdenes = async (id) => {
-    try {
-      setLoading(true)
-      const r = await getAllOrdenService()
-      console.log(r.data)
-      setData(r.data)
-      setLoading(false)
-    } catch (error) {
-      console.log(error)
-      setLoading(false)
-      setError(error.message)
-    }
-  } */
-  const getAllOrdenes = async () => {
+  const getAlUsuarios = async () => {
     setLoading(true)
     setData([])
     try {
-      const res = await getAllOrdenService({signal:signal})
+      const res = await getAllUsuariosService({signal:signal})
       if (res.status !== 200) {
         let err = new Error('Error en la petición Fetch')
         err.status = res.status || '00'
@@ -53,7 +40,18 @@ export const useOrden = () => {
     }
   }
 
+  /* const getEventoById = async (id) => {
+    try {
+      const r = await getAllPuntoVentaByIdService(id)
+      console.log(r.data)
+      setDataDetalle(r.data)
+    } catch (error) {
+      console.log(error)
+    }
+  } */
+
   
+
 
   
 
@@ -61,7 +59,7 @@ export const useOrden = () => {
     data,
     error,
     loading,
-    getAllOrdenes,
+    getAlUsuarios,
     abortController
   }
 }

@@ -14,8 +14,6 @@ EventosRouters.get("/", async (req, res) => {
   try {
     var eventos = await buscarElasticByType("evento");
     /* return res.json(searchResult.body.hits); */
-
-    console.log(eventos);
     return res.status(200).json(eventos);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -106,7 +104,6 @@ EventosRouters.post("/", async (req, res) => {
     const resElasCreateFun = await crearElasticByType(FuncionCreate, "funcion");
 
     const esquemaData = await getDocumentById(dataEventRe.esquema_id);
-    console.log(esquemaData.sections);
     let sections = esquemaData.sections;
     let tickesPie = [];
     sections.forEach((sect) => {
@@ -149,7 +146,6 @@ EventosRouters.post("/:id/funcion", async (req, res) => {
 
   const eventData = await getDocumentById(req.params.id);
   const esquemaData = await getDocumentById(eventData.esquema_id);
-    console.log(esquemaData.sections);
     let sections = esquemaData.sections;
     let tickesPie = [];
     sections.forEach((sect) => {

@@ -151,18 +151,19 @@ export default function FormEsquemaPage() {
             <div className="flex-shrink-1">
               <button
                 type="button"
-                onClick={ async() => {
+                onClick={async () => {
                   console.log(listSection)
                   console.log(nameEquema)
                   console.log({ name: nameEquema, sections: listSection, recinto_id: idRecinto })
-                
+
                   try {
-                    const r = await axios.post(`http://localhost:3001/recinto/${idRecinto}/esquema`,{ name: nameEquema, sections: listSection, recinto_id: idRecinto })
-                    console.log(r.data);
-                    
+                    const r = await axios.post(
+                      `http://localhost:3001/recinto/${idRecinto}/esquema`,
+                      { name: nameEquema, sections: listSection, recinto_id: idRecinto },
+                    )
+                    console.log(r.data)
                   } catch (error) {
-                    console.log(error);
-                    
+                    console.log(error)
                   }
                 }}
                 className="btn btn-primary text-nowrap"
@@ -188,7 +189,7 @@ export default function FormEsquemaPage() {
                     />
                   </Form.Group>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-2">
                   <Form.Group className="mb-3" controlId="aforo">
                     <Form.Label>Aforo </Form.Label>
                     <Form.Control
@@ -197,6 +198,19 @@ export default function FormEsquemaPage() {
                       placeholder="500"
                     />
                   </Form.Group>
+                </div>
+                <div className="col-md-2">
+                  <Form.Label htmlFor="type_sales_point">Tipo de Distribución</Form.Label>
+                  <Form.Select
+                    {...register('role', { required: true })}
+                    aria-label="Default select example"
+                    id="type_sales_point"
+                  >
+                    <option selected value="pie">
+                      De Pie
+                    </option>
+                    <option value="asiento">Asiento</option>
+                  </Form.Select>
                 </div>
                 <div className="col-md-2">
                   <Form.Group className="mb-3" controlId="nletraame">
@@ -208,11 +222,38 @@ export default function FormEsquemaPage() {
                     />
                   </Form.Group>
                 </div>
-                <div className="col-md-2">
+                <div className="col-md-1">
                   <Form.Group className="mb-3" controlId="puerta">
                     <Form.Label>Puerta </Form.Label>
                     <Form.Control {...register('puerta')} type="text" placeholder="F12" />
                   </Form.Group>
+                </div>
+                <div className="col-md-4">
+                  <label>Filas: </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={rows}
+                    {...register('row', { required: true })}
+                    onChange={handleRowsChange}
+                    min="1"
+                    max="26"
+                  />
+                </div>
+                <div className="col-md-4">
+                  <label> Columnas: </label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={columns}
+                    onChange={handleColumnsChange}
+                    min="1"
+                  />
+                </div>
+                <div style={{ marginTop: '20px', maxWidth: '100%',  overflow:"auto"}}>
+                  <table style={{ borderCollapse: 'collapse', marginTop: '20px' }}>
+                    <tbody>{renderSeatTable()}</tbody>
+                  </table>
                 </div>
                 <div className="text-center">
                   <button type="submit" className="btn btn-primary">
@@ -254,22 +295,17 @@ export default function FormEsquemaPage() {
                 max="26"
               />
             </div>
-          <div className="col-md-4">
-            <label> Columnas: </label>
-            <input
-              type="number"
-              className="form-control"
-              value={columns}
-              onChange={handleColumnsChange}
-              min="1"
-            />
+            <div className="col-md-4">
+              <label> Columnas: </label>
+              <input
+                type="number"
+                className="form-control"
+                value={columns}
+                onChange={handleColumnsChange}
+                min="1"
+              />
+            </div>
           </div>
-          </div>
-        </div>
-        <div style={{ marginTop: '20px' }}>
-          <table style={{ borderCollapse: 'collapse', marginTop: '20px' }}>
-            <tbody>{renderSeatTable()}</tbody>
-          </table>
         </div> */}
       </div>
     </div>

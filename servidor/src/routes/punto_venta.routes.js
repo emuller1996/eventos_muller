@@ -15,7 +15,6 @@ PuntoVentaRouters.get("/", async (req, res) => {
   try {
     var data = await buscarElasticByType("punto_venta");
     /* return res.json(searchResult.body.hits); */
-    console.log(data);
     return res.status(200).json(data);
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -32,20 +31,19 @@ PuntoVentaRouters.get("/:id", async (req, res) => {
   }
 });
 
-
 PuntoVentaRouters.post("/", async (req, res) => {
   try {
     var recinto = {};
     const data = req.body;
     const response = await crearElasticByType(data, "punto_venta");
     //recinto = response.body;
-    return res.status(201).json({ message: "Punto de Venta Creado.", recinto,data });
+
+    return res
+      .status(201)
+      .json({ message: "Punto de Venta Creado.", recinto, data });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 });
-
-
-
 
 export default PuntoVentaRouters;

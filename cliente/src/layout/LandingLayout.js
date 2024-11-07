@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast'
 import { Card, Carousel, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import Landing from '../views/landing/Landing'
+import './LandingLayout.css'
 
 const LandingLayout = () => {
   const [index, setIndex] = useState(0)
@@ -13,7 +14,54 @@ const LandingLayout = () => {
   }
   return (
     <div>
-      <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
+      <nav className="mullnavbar navbar navbar-expand-lg">
+        <div className="container">
+          <a className="navbar-brand" href="#">
+            MULLER BOLETOS
+          </a>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarText"
+            aria-controls="navbarText"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+          <div className="collapse navbar-collapse" id="navbarText">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <a className="nav-link active" aria-current="page" href="#">
+                  Inicio
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  Features
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link" href="#">
+                  Pricing
+                </a>
+              </li>
+            </ul>
+            <span className="navbar-text">
+              <div className="d-flex gap-4 justify-content-center">
+                <Link className="nav-link" to={`/login`}>
+                  Login
+                </Link>
+                <Nav.Link eventKey={2} href="#memes">
+                  <Link to={`/d/`}>Admin</Link>
+                </Nav.Link>
+              </div>
+            </span>
+          </div>
+        </div>
+      </nav>
+      {/* <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
         <Container>
           <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -30,17 +78,16 @@ const LandingLayout = () => {
               </NavDropdown>
             </Nav>
             <Nav>
-              <Nav.Link href="#deets">Registrame</Nav.Link>
-              <Nav.Link eventKey={2} href="#memes">
+              <Link className="nav-link" to={`/login`}>
                 Login
-              </Nav.Link>
+              </Link>
               <Nav.Link eventKey={2} href="#memes">
                 <Link to={`/d/`}>Admin</Link>
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
-      </Navbar>
+      </Navbar> */}
       <Landing />
 
       <div className="container-fluid bg-white">

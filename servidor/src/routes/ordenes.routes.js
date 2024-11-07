@@ -26,7 +26,6 @@ OrdenesRouters.post("/", async (req, res) => {
       const r =await updateElasticByType(bol._id,{status:"Vendido"})
       return r
     })
-    console.log(rrPromesas);
     await Promise.all(rrPromesas)
     return res.status(201).json({ message: "Orden Generada.", order });
   } catch (error) {
@@ -38,7 +37,6 @@ OrdenesRouters.get("/", async (req, res) => {
   try {
     var ordenes = await buscarElasticByType("orden");
     /* return res.json(searchResult.body.hits); */
-    console.log(ordenes);
     ordenes = ordenes.map( async or => {
       if(or.evento_id){
         await getDocumentById(or.evento_id)

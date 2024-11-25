@@ -1,7 +1,7 @@
 .mullnavbar {
-  background: rgb(74, 222, 128);
-  background: -moz-linear-gradient(25deg, rgba(74, 222, 128, 1) 26%, rgba(24, 115, 58, 1) 79%, rgba(22, 171, 77, 1) 91%);
-  background: -webkit-linear-gradient(25deg, rgba(74, 222, 128, 1) 26%, rgba(24, 115, 58, 1) 79%, rgba(22, 171, 77, 1) 91%);
-  background: linear-gradient(25deg, rgba(74, 222, 128, 1) 26%, rgba(24, 115, 58, 1) 79%, rgba(22, 171, 77, 1) 91%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#4ade80", endColorstr="#16ab4d", GradientType=1);
+  background: rgb(237, 232, 232);
+  background: -moz-linear-gradient(25deg, rgba(237, 232, 232, 1) 15%, rgba(214, 139, 147, 1) 55%, rgba(111, 111, 111, 1) 99%);
+  background: -webkit-linear-gradient(25deg, rgba(237, 232, 232, 1) 15%, rgba(214, 139, 147, 1) 55%, rgba(111, 111, 111, 1) 99%);
+  background: linear-gradient(25deg, rgba(237, 232, 232, 1) 15%, rgba(214, 139, 147, 1) 55%, rgba(111, 111, 111, 1) 99%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ede8e8", endColorstr="#6f6f6f", GradientType=1);
 }

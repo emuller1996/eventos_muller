@@ -5,6 +5,7 @@ import { Card, Carousel, Container, Nav, Navbar, NavDropdown } from 'react-boots
 import { Link } from 'react-router-dom'
 import Landing from '../views/landing/Landing'
 import './LandingLayout.css'
+import logo from '../assets/LOGOEVENTOS.png'
 
 const LandingLayout = () => {
   const [index, setIndex] = useState(0)
@@ -17,7 +18,7 @@ const LandingLayout = () => {
       <nav className="mullnavbar navbar navbar-expand-lg">
         <div className="container">
           <a className="navbar-brand" href="#">
-            MULLER BOLETOS
+            <img src={logo} height={'70px'} width={'180px'} />
           </a>
           <button
             className="navbar-toggler"

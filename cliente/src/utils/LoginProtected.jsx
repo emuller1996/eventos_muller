@@ -12,7 +12,7 @@ export default function LoginProtected({ children }) {
   const { user } = useContext(AuthContext)
   const [isLoading, setisLoading] = useState(true)
   const navigate = useNavigate()
-  const [tokenAccess, setTokenAccess] = useLocalStorage('tokenAccess', null)
+  const [tokenAccess, setTokenAccess] = useLocalStorage('tokenAccessEventMull', null)
 
   useEffect(() => {
     validateTest()

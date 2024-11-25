@@ -59,9 +59,9 @@ const App = () => {
               path="d/*"
               name="Home"
               element={
-                <LoginProtected>
-                  <DefaultLayout />
-                </LoginProtected>
+                /*  <LoginProtected> */
+                <DefaultLayout />
+                /* </LoginProtected> */
               }
             />
           </Routes>

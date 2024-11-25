@@ -15,7 +15,7 @@ export default function FormRecinto({ onHide, getAllRecintos }) {
   const onSubmit = async(data) => {
     console.log(data)
     try {
-      const result = await axios.post("http://localhost:3001/recinto",data)
+      const result = await axios.post("/recinto",data)
       console.log(result);
       await getAllRecintos()
       onHide()

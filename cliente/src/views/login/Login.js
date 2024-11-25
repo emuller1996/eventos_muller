@@ -22,7 +22,7 @@ import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { jwtDecode } from 'jwt-decode'
 
 const Login = () => {
-  const [, setTokenAccess] = useLocalStorage('tokenAccess', null)
+  const [, setTokenAccess] = useLocalStorage('tokenAccessEventMull', null)
   const { setToken, setUser } = useContext(AuthContext)
 
   const navigate = useNavigate()

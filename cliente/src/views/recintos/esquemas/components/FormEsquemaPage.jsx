@@ -158,7 +158,7 @@ export default function FormEsquemaPage() {
 
                   try {
                     const r = await axios.post(
-                      `http://localhost:3001/recinto/${idRecinto}/esquema`,
+                      `/recinto/${idRecinto}/esquema`,
                       { name: nameEquema, sections: listSection, recinto_id: idRecinto },
                     )
                     console.log(r.data)

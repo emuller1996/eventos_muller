@@ -25,6 +25,15 @@ FuncionesRouters.get("/:id", async (req, res) => {
   try {
     var funcion = await getDocumentById(req.params.id);
 
+    if(funcion.evento_id){
+      funcion.evento = await getDocumentById(funcion.evento_id);
+    }
+    if(funcion.evento.esquema_id){
+      funcion.esquema = await getDocumentById(funcion.evento.esquema_id);
+    }
+    if(funcion.evento.recinto_id){
+      funcion.recinto = await getDocumentById(funcion.evento.recinto_id);
+    }
     return res.status(200).json(funcion);
   } catch (error) {
     return res.status(500).json({ message: error.message });

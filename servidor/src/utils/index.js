@@ -129,7 +129,7 @@ export async function getDocumentById(id) {
     index: INDEX_ES, // Nombre del índice
     id: id, // ID del documento
   });
-  return response.body._source;
+  return { ...response.body._source, _id :response.body._id };
 }
 
 export async function createInMasaDocumentByType(data, type) {

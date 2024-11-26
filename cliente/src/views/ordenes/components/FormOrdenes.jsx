@@ -9,8 +9,13 @@ import { Form } from 'react-bootstrap'
 import { ViewDollar } from '../../../utils'
 import toast from 'react-hot-toast'
 import { postCrearOrdenService } from '../../../services/ordenes.services'
+import PropTypes from 'prop-types'
 
-export default function FormOrdenes() {
+export default function FormOrdenes({ evento, funcion }) {
+  FormOrdenes.propTypes = {
+    evento: PropTypes.object,
+    funcion: PropTypes.object,
+  }
   const {
     getAllEvento,
     data: ListEventos,
@@ -22,8 +27,8 @@ export default function FormOrdenes() {
     getAllEvento()
   }, [])
 
-  const [EventoSelecionado, setEventoSelecionado] = useState(null)
-  const [FuncionSelecionado, setFuncionSelecionado] = useState(null)
+  const [EventoSelecionado, setEventoSelecionado] = useState(evento ? evento : null)
+  const [FuncionSelecionado, setFuncionSelecionado] = useState(funcion ? funcion : null)
   const [OpcionesBoletos, setOpcionesBoletos] = useState(null)
   const [BoletosSelecionados, setBoletosSelecionados] = useState([])
 
@@ -123,7 +128,7 @@ export default function FormOrdenes() {
                               value: `${sec.name_section}`,
                               data: sec,
                             }
-                          }),
+                          })
                         )
                         await getFuncionesByEvento(eve._id)
                       }}

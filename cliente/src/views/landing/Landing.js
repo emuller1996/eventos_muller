@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useFunciones } from '../../hooks/useFunciones'
+import { Link } from 'react-router-dom'
 
 const Landing = () => {
   const [index, setIndex] = useState(0)
@@ -47,9 +48,13 @@ const Landing = () => {
                       <p className="card-text">{fun.end_date}</p>
                       <div className="d-flex justify-content-between align-items-center">
                         <div className="btn-group">
-                          <button type="button" className="btn btn-sm btn-outline-secondary">
+                          <Link
+                            to={`show/${fun._id}`}
+                            type="button"
+                            className="btn btn-sm btn-outline-secondary"
+                          >
                             Comprar Boletos
-                          </button>
+                          </Link>
                         </div>
                         <small className="text-muted">9 mins</small>
                       </div>

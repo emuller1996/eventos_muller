@@ -7,6 +7,8 @@ import { Link, useParams } from 'react-router-dom'
 
 export default function FormEsquemaPage() {
   const { idRecinto } = useParams()
+  const [selectedImage, setSelectedImage] = useState(null)
+  const [base64Image, setBase64Image] = useState('')
 
   const [rows, setRows] = useState(1) // Número de filas
   const [seatStates, setSeatStates] = useState({}) // Estado de habilitación de asientos
@@ -80,6 +82,28 @@ export default function FormEsquemaPage() {
       }, // Cambia el estado actual
     }))
   }
+
+  // Función para manejar la selección de archivo
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      setSelectedImage(file)
+      convertToBase64(file)
+    }
+  }
+
+  // Convertir imagen a Base64
+  const convertToBase64 = (file) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onloadend = () => {
+      setBase64Image(reader.result)
+    }
+    reader.onerror = (error) => {
+      console.error('Error al convertir la imagen a Base64:', error)
+    }
+  }
+
   const renderSeatTable = () => {
     const tableRows = []
     const tableRowsData = []
@@ -154,13 +178,19 @@ export default function FormEsquemaPage() {
                 onClick={async () => {
                   console.log(listSection)
                   console.log(nameEquema)
-                  console.log({ name: nameEquema, sections: listSection, recinto_id: idRecinto })
-
+                  console.log({
+                    name: nameEquema,
+                    sections: listSection,
+                    recinto_id: idRecinto,
+                    image: base64Image ?? null,
+                  })
                   try {
-                    const r = await axios.post(
-                      `/recinto/${idRecinto}/esquema`,
-                      { name: nameEquema, sections: listSection, recinto_id: idRecinto },
-                    )
+                    const r = await axios.post(`/recinto/${idRecinto}/esquema`, {
+                      name: nameEquema,
+                      sections: listSection,
+                      recinto_id: idRecinto,
+                      image: base64Image ?? null,
+                    })
                     console.log(r.data)
                   } catch (error) {
                     console.log(error)
@@ -173,6 +203,18 @@ export default function FormEsquemaPage() {
             </div>
           </div>
         </Form.Group>
+        <Form.Group controlId="formFile" className="mb-3">
+          <Form.Label>Imagen de la Funcion</Form.Label>
+          <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
+        </Form.Group>
+
+        {selectedImage && (
+          <div className=" d-flex gap-4 justify-content-center">
+            <div className="rounded-4 border overflow-hidden">
+              <img src={URL.createObjectURL(selectedImage)} alt="Preview" width="300px" />
+            </div>
+          </div>
+        )}
 
         <hr />
         <div>
@@ -228,7 +270,7 @@ export default function FormEsquemaPage() {
                     <Form.Control {...register('puerta')} type="text" placeholder="F12" />
                   </Form.Group>
                 </div>
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                   <label>Filas: </label>
                   <input
                     type="number"
@@ -254,7 +296,7 @@ export default function FormEsquemaPage() {
                   <table style={{ borderCollapse: 'collapse', marginTop: '20px' }}>
                     <tbody>{renderSeatTable()}</tbody>
                   </table>
-                </div>
+                </div> */}
                 <div className="text-center">
                   <button type="submit" className="btn btn-primary">
                     Agregar Seccion

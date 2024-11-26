@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { AppContent, AppSidebar, AppFooter, AppHeader } from '../components/index'
 import { Toaster } from 'react-hot-toast'
 import { Card, Carousel, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, NavLink, Route, Routes } from 'react-router-dom'
 import Landing from '../views/landing/Landing'
 import './LandingLayout.css'
 import logo from '../assets/LOGOEVENTOS.png'
+import ShowShopPage from '../views/landing/ShowShopPage'
 
 const LandingLayout = () => {
   const [index, setIndex] = useState(0)
@@ -34,19 +35,37 @@ const LandingLayout = () => {
           <div className="collapse navbar-collapse" id="navbarText">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">
+                <NavLink
+                  to={''}
+                  className={({ isActive, isPending }) =>
+                    isPending ? 'pending' : isActive ? 'nav-link  fw-bold' : ' nav-link'
+                  }
+                  aria-current="page"
+                  href="#"
+                >
                   Inicio
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Features
-                </a>
+                <NavLink
+                  to={'puntos-ventas'}
+                  className={({ isActive, isPending }) =>
+                    isPending ? 'pending' : isActive ? 'nav-link  fw-bold' : ' nav-link'
+                  }
+                >
+                  Puntos de Venta
+                </NavLink>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">
-                  Pricing
-                </a>
+                <NavLink
+                  to={'contactanos'}
+                  className={({ isActive, isPending }) =>
+                    isPending ? 'pending' : isActive ? 'nav-link  fw-bold' : ' nav-link'
+                  }
+                  href="#"
+                >
+                  Contactanos
+                </NavLink>
               </li>
             </ul>
             <span className="navbar-text">
@@ -62,34 +81,42 @@ const LandingLayout = () => {
           </div>
         </div>
       </nav>
-      {/* <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
-        <Container>
-          <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav classNameName="me-auto">
-              <Nav.Link href="#features">Features</Nav.Link>
-              <Nav.Link href="#pricing">Pricing</Nav.Link>
-              <NavDropdown title="Dropdown" id="collapsible-nav-dropdown">
-                <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-            <Nav>
-              <Link className="nav-link" to={`/login`}>
-                Login
-              </Link>
-              <Nav.Link eventKey={2} href="#memes">
-                <Link to={`/d/`}>Admin</Link>
-              </Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar> */}
-      <Landing />
+
+      <Routes>
+        <Route
+          key={'puntos-ventas'}
+          path={'/puntos-ventas'}
+          exact={true}
+          name={'Puntos de Ventas'}
+          element={
+            <>
+              <p>page punto ventas</p>
+            </>
+          }
+        />
+        <Route
+          key={'puntos-ventas'}
+          path={'/'}
+          exact={true}
+          name={'Puntos de Ventas'}
+          element={
+            <>
+              <Landing />
+            </>
+          }
+        />
+        <Route
+          key={'comprar-boletos'}
+          path={'/show/:idShow'}
+          exact={true}
+          name={'Comprar Boleto'}
+          element={
+            <>
+              <ShowShopPage />
+            </>
+          }
+        />
+      </Routes>
 
       <div className="container-fluid bg-white">
         <div className="container">

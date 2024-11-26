@@ -23,19 +23,23 @@ export default function EsquemaPage() {
           <i className="fa-solid fa-plus me-2"></i>Crear Esquema
         </Link>
       </div>
-      <div className="row mt-4">
+      <div className="row g-4 mt-4">
         {esquemasRecinto &&
           esquemasRecinto.map((esque) => (
             <div key={esque._id} className="col-md-6">
-              <div className="card text-muted">
+              <div className="card text-muted h-100">
                 <div className="card-body">
-                  <p className='text-primary fw-bold fs-5' >{esque.name}</p>
+                  <p className="text-primary fw-bold fs-5">{esque.name}</p>
+                  {esque?.image && <img width={"200px"} src={esque?.image} />}
                   <ul className="list-group">
-                    {esque.sections.map(sec =>(
-                    <li key={sec?.name_section} className="list-group-item d-flex justify-content-between align-items-center">
-                      {sec?.name_section} {`[ ${sec?.letra} ]`}
-                      <span className="badge bg-secondary badge-pill">Aforo:  {sec?.aforo}</span>
-                    </li>
+                    {esque.sections.map((sec) => (
+                      <li
+                        key={sec?.name_section}
+                        className="list-group-item d-flex justify-content-between align-items-center"
+                      >
+                        {sec?.name_section} {`[ ${sec?.letra} ]`}
+                        <span className="badge bg-secondary badge-pill">Aforo: {sec?.aforo}</span>
+                      </li>
                     ))}
                   </ul>
 

@@ -153,6 +153,7 @@ const LandingLayout = () => {
           </footer>
         </div>
       </div>
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   )
 }

@@ -23,6 +23,7 @@ const ShowShopPage = () => {
   const [OpcionesBoletos, setOpcionesBoletos] = useState(null)
   const [pasoActive, setPasoActive] = useState('0')
   const [total, settotal] = useState(null)
+  const [dataPayment, setdataPayment] = useState(null)
 
   const initialization = {
     amount: 100000,
@@ -55,11 +56,34 @@ const ShowShopPage = () => {
         .then((response) => {
           // recibir el resultado del pago
           console.log(response)
-          toast.success('SE GENERO SU ORDE')
           if (response.data.mercaResponse.status === 'approved') {
+            toast.success('SE GENERO SU ORDE')
             setPasoActive('3')
+            setdataPayment(response.data.mercaResponse)
+            resolve()
+          } else {
+            //toast.error('HUBO UN ERROR EN EL PROCESO DE PAGO')
+            let txtError = ''
+            if (response.data.mercaResponse.status_detail === 'cc_rejected_insufficient_amount') {
+              txtError = 'La tarjeta no cuenta con los fondos para el cobro de la orden.'
+            }
+            if (response.data.mercaResponse.status_detail === 'cc_rejected_other_reason') {
+              txtError = 'La tarjeta ha sido rechazada por otras razones.'
+            }
+
+            toast((t) => (
+              <div className="" role="alert">
+                <span className="fw-bold text-center">ERROR AL PROCESAR EL PAGO</span>
+                <span className="d-block">
+                  {txtError}
+                  <button className="btn btn-sm btn-danger" onClick={() => toast.dismiss(t.id)}>
+                    Dismiss
+                  </button>
+                </span>
+              </div>
+            ))
+            reject()
           }
-          resolve()
         })
         .catch((error) => {
           // manejar la respuesta de error al intentar crear el pago
@@ -298,7 +322,14 @@ const ShowShopPage = () => {
             </Accordion.Header>
             <Accordion.Body>
               <div className="row">
-                <p>Tu Pago se ha Recido con Exito</p>
+                <p className="text-center">
+                  <i className="fa-solid fa-check-double fa-2x me-3 text-success"></i>Tu Pago se ha
+                  Recido con Exito
+                </p>
+                <p>
+                  Tu Orden se ha generado sin problemas en unos momentos recibira un correo
+                  electronico con la informacion de sus boletos.
+                </p>
               </div>
             </Accordion.Body>
           </Accordion.Item>

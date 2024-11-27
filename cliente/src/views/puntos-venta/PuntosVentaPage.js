@@ -11,18 +11,18 @@ const PuntosVentaPage = () => {
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+  const [draw, setDraw] = useState(1)
 
   const { getAllPuntoVenta, data: ListPuntoVenta, loading, abortController } = usePuntoVenta()
 
   useEffect(() => {
     getAllPuntoVenta()
-
     return () => {
       console.log('test')
       console.log(abortController)
       abortController.abort()
     }
-  }, [])
+  }, [draw])
 
   return (
     <div>
@@ -64,7 +64,12 @@ const PuntosVentaPage = () => {
 
       <Modal backdrop={'static'} size="lg" centered show={show} onHide={handleClose}>
         <Modal.Body>
-          <FormPuntosVenta onHide={handleClose} />
+          <FormPuntosVenta
+            onHide={() => {
+              handleClose()
+              setDraw((status) => ++status)
+            }}
+          />
         </Modal.Body>
       </Modal>
     </div>

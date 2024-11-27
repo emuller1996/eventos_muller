@@ -7,6 +7,7 @@ import Landing from '../views/landing/Landing'
 import './LandingLayout.css'
 import logo from '../assets/LOGOEVENTOS.png'
 import ShowShopPage from '../views/landing/ShowShopPage'
+import PuntoVentaPage from '../views/landing/PuntoVentaPage'
 
 const LandingLayout = () => {
   const [index, setIndex] = useState(0)
@@ -73,9 +74,9 @@ const LandingLayout = () => {
                 <Link className="nav-link" to={`/login`}>
                   Login
                 </Link>
-                <Nav.Link eventKey={2} href="#memes">
-                  <Link to={`/d/`}>Admin</Link>
-                </Nav.Link>
+                <Link className="nav-link" to={`/d/`}>
+                  Admin
+                </Link>
               </div>
             </span>
           </div>
@@ -90,7 +91,7 @@ const LandingLayout = () => {
           name={'Puntos de Ventas'}
           element={
             <>
-              <p>page punto ventas</p>
+              <PuntoVentaPage />
             </>
           }
         />
@@ -152,6 +153,7 @@ const LandingLayout = () => {
           </footer>
         </div>
       </div>
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   )
 }

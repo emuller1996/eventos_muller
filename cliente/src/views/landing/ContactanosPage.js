@@ -19,7 +19,20 @@ const ContactanosPage = () => {
     <div>
       <div className="container mt-4">
         <h4 className="text-center ">Contactanos</h4>
-
+        <div className="row mb-5">
+          <div className="col-md-6">
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti perferendis
+              necessitatibus doloribus temporibus. Facere, molestias obcaecati officia laudantium
+              temporibus ad voluptatibus vero dolores? Rerum magnam sint, saepe recusandae quasi a!
+            </p>
+          </div>
+          <div className="col-md-6">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti perferendis</p>
+            <p>Lorem ipsum dolor </p>
+            <p>Lorem ipsum dolor </p>
+          </div>
+        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="row">
             <div className="col-md-6">

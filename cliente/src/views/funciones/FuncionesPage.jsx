@@ -23,9 +23,8 @@ export default function FuncionesPage() {
         <Table responsive striped bordered hover>
           <thead>
             <tr>
-              <th width="200px">ID</th>
-              <th>Imagen</th>
-              <th width="400px">Nombre Funcion</th>
+              <th width="200px">Imagen</th>
+              <th width="">Nombre Funcion</th>
               <th width="400px">Fechas</th>
               <th width="20px">#</th>
             </tr>
@@ -34,7 +33,7 @@ export default function FuncionesPage() {
             {ListFunciones &&
               ListFunciones.map((eve) => (
                 <tr key={eve._id}>
-                  <td>{eve._id}</td>
+                  {/* <td>{eve._id}</td> */}
                   <td>
                       <div>
                       {eve?.image && (

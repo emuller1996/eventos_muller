@@ -70,7 +70,7 @@ export default function EventosPage() {
         <Table responsive striped bordered hover>
           <thead>
             <tr>
-              <th width="200px">ID</th>
+              {/* <th width="200px">ID</th> */}
               <th>Nombre Evento</th>
               <th>Categoria</th>
               <th>Fechas</th>
@@ -81,7 +81,7 @@ export default function EventosPage() {
             {ListEvent &&
               ListEvent.map((eve) => (
                 <tr key={eve._id}>
-                  <td>{eve._id}</td>
+                  {/* <td>{eve._id}</td> */}
                   <td>{eve.name}</td>
                   <td>{eve.category}</td>
                   <td>

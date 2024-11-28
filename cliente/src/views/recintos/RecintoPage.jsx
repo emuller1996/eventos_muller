@@ -39,7 +39,7 @@ export default function RecintoPage() {
           <table className="table  ">
             <thead>
               <tr>
-                <th scope="col">Id</th>
+                {/* <th scope="col">Id</th> */}
                 <th scope="col">Nombre</th>
                 <th scope="col">Cartegoria</th>
                 <th scope="col">Ciudad</th>
@@ -51,7 +51,7 @@ export default function RecintoPage() {
               {ListRecintos &&
                 ListRecintos.map((recinto) => (
                   <tr key={recinto?._id} className="">
-                    <td scope="row">{recinto?._id}</td>
+                    {/* <td scope="row">{recinto?._id}</td> */}
                     <td>{recinto?.name}</td>
                     <td>{recinto?.category}</td>
                     <td>{recinto?.city}</td>

@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useFunciones } from '../../hooks/useFunciones'
 import { Link } from 'react-router-dom'
+import useEmblaCarousel from 'embla-carousel-react'
+import './Landing.css'
 
 const Landing = () => {
   const [index, setIndex] = useState(0)
 
   const { getAllFunciones, data: ListFunciones } = useFunciones()
-
+  const [emblaRef, emblaApi] = useEmblaCarousel()
   useEffect(() => {
     getAllFunciones()
   }, [])
@@ -14,6 +16,14 @@ const Landing = () => {
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex)
   }
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev()
+  }, [emblaApi])
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext()
+  }, [emblaApi])
+
   return (
     <div>
       <div className="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
@@ -29,6 +39,24 @@ const Landing = () => {
         </div>
         <div className="product-device shadow-sm d-none d-md-block"></div>
         <div className="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+      </div>
+
+      <div className="embla">
+        <div className="embla__viewport" ref={emblaRef}>
+          <div className="embla__container">
+            <div className="embla__slide">
+              <p>MEJORE EVENTOS Y PRECIOS</p>
+            </div>
+            <div className="embla__slide">Slide 2</div>
+            <div className="embla__slide">Slide 3</div>
+          </div>
+        </div>
+        <button className="embla__prev" onClick={scrollPrev}>
+          Prev
+        </button>
+        <button className="embla__next" onClick={scrollNext}>
+          Next
+        </button>
       </div>
       <div className="album py-5 bg-light">
         <div className="container">

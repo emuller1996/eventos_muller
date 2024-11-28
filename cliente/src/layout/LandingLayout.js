@@ -8,6 +8,7 @@ import './LandingLayout.css'
 import logo from '../assets/LOGOEVENTOS.png'
 import ShowShopPage from '../views/landing/ShowShopPage'
 import PuntoVentaPage from '../views/landing/PuntoVentaPage'
+import ContactanosPage from '../views/landing/ContactanosPage'
 
 const LandingLayout = () => {
   const [index, setIndex] = useState(0)
@@ -103,6 +104,17 @@ const LandingLayout = () => {
           element={
             <>
               <Landing />
+            </>
+          }
+        />
+        <Route
+          key={'contactanos'}
+          path={'/contactanos'}
+          exact={true}
+          name={'Contactanos'}
+          element={
+            <>
+              <ContactanosPage />
             </>
           }
         />

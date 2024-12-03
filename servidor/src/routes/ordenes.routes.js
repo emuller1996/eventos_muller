@@ -90,7 +90,7 @@ OrdenesRouters.get("/", async (req, res) => {
             headers: { Authorization: `Bearer ${process.env.ACCESS_TOKEN}` },
           }
         );
-        or.mercadopago_data = r.data
+        or.mercadopago_data = r.data;
       }
       return or;
     });
@@ -98,6 +98,25 @@ OrdenesRouters.get("/", async (req, res) => {
     ordenes = await Promise.all(ordenes);
     return res.status(200).json(ordenes);
   } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+OrdenesRouters.get("/:id", async (req, res) => {
+  try {
+    const data = await getDocumentById(req.params.id);
+    if (data.mercadopago_id) {
+      const r = await axios.get(
+        `https://api.mercadopago.com/v1/payments/${data.mercadopago_id}`,
+        {
+          headers: { Authorization: `Bearer ${process.env.ACCESS_TOKEN}` },
+        }
+      );
+      data.mercadopago_data = r.data;
+    }
+    return res.status(200).json(data);
+  } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: error.message });
   }
 });

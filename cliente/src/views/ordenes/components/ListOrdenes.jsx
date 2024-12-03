@@ -1,14 +1,20 @@
 /* eslint-disable prettier/prettier */
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from 'react-data-table-component'
 import { paginationComponentOptions } from '../../../utils/optionsConfig'
 import { useOrden } from '../../../hooks/useOrden'
 import { ViewDollar } from '../../../utils'
 import { CSpinner } from '@coreui/react'
+import { Modal } from 'react-bootstrap'
+import DetalleOrdenComponent from './DetalleOrdenComponent'
 
 export default function ListOrdenes() {
   const { getAllOrdenes, data: ListOrder, abortController, loading } = useOrden()
+  const [show, setShow] = useState(false)
+  const [idOrden, setidOrden] = useState(false)
 
+  const handleClose = () => setShow(false)
+  const handleShow = () => setShow(true)
   useEffect(() => {
     getAllOrdenes()
     return () => {
@@ -30,6 +36,28 @@ export default function ListOrdenes() {
             className="MyDataTableEvent"
             striped
             columns={[
+              {
+                name: 'Id',
+                selector: (row) => row._id,
+                width: '60px',
+                cell: (row) => {
+                  return (
+                    <>
+                      <button
+                        onClick={() => {
+                          console.log('test')
+                          console.log(row)
+                          handleShow()
+                          setidOrden(row._id)
+                        }}
+                        className="btn btn-info btn-sm text-white"
+                      >
+                        <i className="fa-regular fa-pen-to-square"></i>
+                      </button>
+                    </>
+                  )
+                },
+              },
               { name: 'Id Order', selector: (row) => row.createdTime },
               {
                 name: 'Fecha',
@@ -52,6 +80,17 @@ export default function ListOrdenes() {
             noDataComponent="No hay datos para mostrar"
           />
         )}
+
+        <Modal backdrop={'static'} size="lg" centered show={show} onHide={handleClose}>
+          <Modal.Body>
+            <DetalleOrdenComponent
+              onHide={() => {
+                handleClose()
+              }}
+              idOrder={idOrden}
+            />
+          </Modal.Body>
+        </Modal>
       </div>
     </div>
   )

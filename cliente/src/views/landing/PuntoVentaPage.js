@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { useFunciones } from '../../hooks/useFunciones'
 import { Link } from 'react-router-dom'
 import { usePuntoVenta } from '../../hooks/usePuntoVenta'
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet'
+import 'leaflet/dist/leaflet.css'
+import PropTypes from 'prop-types'
 
 const PuntoVentaPage = () => {
   const { getAllPuntoVenta, data: ListPuntoVenta, loading, abortController } = usePuntoVenta()
@@ -15,6 +18,19 @@ const PuntoVentaPage = () => {
       abortController.abort()
     }
   }, [])
+
+  function LocationPicker({ setCoordinates }) {
+    LocationPicker.propTypes = {
+      setCoordinates: PropTypes.func,
+    }
+    useMapEvents({
+      click(e) {
+        //setCoordinates(e.latlng) // Obtiene las coordenadas donde el usuario haga clic
+      },
+    })
+
+    return null
+  }
   return (
     <div>
       <div className="container mt-4">
@@ -28,14 +44,16 @@ const PuntoVentaPage = () => {
               style={{ border: '1px solid rgb(239 204 208)' }}
             >
               <div className="card-body">
-                <div className="mt-3 d-flex justify-content-between ">
-                  <h4 className="card-title">{punto?.name}</h4>
-                  <span className="badge m-3 bg-secondary text-uppercase">
-                    {punto?.type_sales_point}
-                  </span>
+                <div className="d-flex justify-content-between ">
+                  <span className="fs-5">{punto?.name}</span>
+                  <div>
+                    <span className="badge bg-info fs-6 text-uppercase">
+                      {punto?.type_sales_point}
+                    </span>
+                  </div>
                 </div>
 
-                <div className="mt-3 d-flex justify-content-start align-items-center">
+                <div className=" d-flex justify-content-start align-items-center">
                   <i className="fa-solid fa-map-location-dot fa-2x"></i>
                   <div>
                     <span className="ms-3 d-block">{punto?.name}</span>
@@ -43,6 +61,30 @@ const PuntoVentaPage = () => {
                     <span className="ms-3 d-block">{punto?.address}</span>
                   </div>
                 </div>
+                {punto.coordinates && (
+                  <>
+                    <div
+                      className="overflow-hidden rounded"
+                      style={{ height: '300px', width: '100%' }}
+                    >
+                      <MapContainer
+                        center={[punto.coordinates.lat, punto.coordinates.lng]}
+                        zoom={15}
+                        zoomControl={true}
+                        style={{ height: '100%', width: '100%' }}
+                      >
+                        <TileLayer
+                          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        />
+                        {punto.coordinates && (
+                          <Marker position={[punto.coordinates.lat, punto.coordinates.lng]} />
+                        )}
+                        <LocationPicker /* setCoordinates={setCoordinates} */ />
+                      </MapContainer>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           ))}

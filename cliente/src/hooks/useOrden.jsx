@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
 
 import { useState } from 'react'
-import { getAllOrdenService } from '../services/ordenes.services'
+import { getAllOrdenService, getOrdenByIdService } from '../services/ordenes.services'
 
 export const useOrden = () => {
   const [data, setData] = useState(null)
-
+  const [dataDetalle, setDataDetalle] = useState(null)
 
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -29,7 +29,7 @@ export const useOrden = () => {
     setLoading(true)
     setData([])
     try {
-      const res = await getAllOrdenService({signal:signal})
+      const res = await getAllOrdenService({ signal: signal })
       if (res.status !== 200) {
         let err = new Error('Error en la petición Fetch')
         err.status = res.status || '00'
@@ -53,15 +53,26 @@ export const useOrden = () => {
     }
   }
 
-  
-
-  
+  const getOrdenById = async (id) => {
+    try {
+      setLoading(true)
+      const re = await getOrdenByIdService(id)
+      setDataDetalle(re.data)
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setDataDetalle(null)
+      setLoading(false)
+    }
+  }
 
   return {
     data,
     error,
     loading,
     getAllOrdenes,
-    abortController
+    abortController,
+    getOrdenById,
+    dataDetalle,
   }
 }

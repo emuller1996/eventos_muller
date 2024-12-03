@@ -46,4 +46,18 @@ PuntoVentaRouters.post("/", async (req, res) => {
   }
 });
 
+PuntoVentaRouters.patch("/:id", async (req, res) => {
+  try {
+    var recinto = {};
+    const data = req.body;
+    const response = await updateElasticByType(req.params.id, data);
+    //recinto = response.body;
+    return res
+      .status(201)
+      .json({ message: "Punto de Venta Creado.", response, data });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
 export default PuntoVentaRouters;

@@ -9,3 +9,7 @@ export const postCrearOrdenService = (data) => {
 export const getAllOrdenService = (data) => {
   return axios.get('/ordenes',data)
 }
+
+export const getOrdenByIdService = (id) => {
+  return axios.get(`/ordenes/${id}`)
+}

@@ -11,6 +11,7 @@ const PuntosVentaPage = () => {
 
   const handleClose = () => setShow(false)
   const handleShow = () => setShow(true)
+  const [PuntoSelecionado, setPuntoSelecionado] = useState(null)
   const [draw, setDraw] = useState(1)
 
   const { getAllPuntoVenta, data: ListPuntoVenta, loading, abortController } = usePuntoVenta()
@@ -27,7 +28,13 @@ const PuntosVentaPage = () => {
   return (
     <div>
       <div>
-        <Button variant="primary" onClick={handleShow}>
+        <Button
+          variant="primary"
+          onClick={() => {
+            handleShow()
+            setPuntoSelecionado(null)
+          }}
+        >
           Crear Puntos Venta
         </Button>
       </div>
@@ -37,7 +44,29 @@ const PuntosVentaPage = () => {
           className="MyDataTableEvent"
           striped
           columns={[
-            { name: 'Id', selector: (row) => row._id },
+            {
+              name: 'Id',
+              selector: (row) => row._id,
+              width: '60px',
+              cell: (row) => {
+                return (
+                  <>
+                    <button
+                      onClick={() => {
+                        console.log('test')
+                        console.log(row)
+                        handleShow()
+                        setPuntoSelecionado(row)
+                      }}
+                      className="btn btn-info btn-sm text-white"
+                    >
+                      <i className="fa-regular fa-pen-to-square"></i>
+                    </button>
+                  </>
+                )
+              },
+            },
+
             { name: 'Nombre', selector: (row) => row?.name ?? '', width: '250px' },
             {
               name: 'Tipo',
@@ -65,6 +94,7 @@ const PuntosVentaPage = () => {
       <Modal backdrop={'static'} size="lg" centered show={show} onHide={handleClose}>
         <Modal.Body>
           <FormPuntosVenta
+            puntoVenta={PuntoSelecionado}
             onHide={() => {
               handleClose()
               setDraw((status) => ++status)

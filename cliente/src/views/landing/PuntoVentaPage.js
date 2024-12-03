@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useFunciones } from '../../hooks/useFunciones'
 import { Link } from 'react-router-dom'
 import { usePuntoVenta } from '../../hooks/usePuntoVenta'
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, useMapEvents, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import PropTypes from 'prop-types'
 
@@ -78,7 +78,11 @@ const PuntoVentaPage = () => {
                           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         />
                         {punto.coordinates && (
-                          <Marker position={[punto.coordinates.lat, punto.coordinates.lng]} />
+                          <Marker position={[punto.coordinates.lat, punto.coordinates.lng]}>
+                            <Popup>
+                              {punto?.name}, {punto?.address}
+                            </Popup>
+                          </Marker>
                         )}
                         <LocationPicker /* setCoordinates={setCoordinates} */ />
                       </MapContainer>

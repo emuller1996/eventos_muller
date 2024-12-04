@@ -194,11 +194,27 @@ const ShowShopPage = () => {
           <img className="img-fluid" src={dataDetalle?.esquema?.image} />
         </div>
         <div className="col-md-6">
-          <div className="card text-start">
-            <div className="card-body">
-              <h4 className="card-title">Title</h4>
-              <p className="card-text">Body</p>
-            </div>
+          <div className="row g-3">
+            {dataDetalle?.evento?.sections_price.map((sect) => (
+              <>
+                <div key={sect.name_section} className="col-12">
+                  <div className="card p-2">
+                    <span className="d-block text-center fs-4 fw-semibold">
+                      {sect.name_section}
+                    </span>
+                    <div className="d-flex justify-content-between">
+                      <span className="">
+                        <i className="fa-solid fa-people-line me-2"></i>Aforo : {sect.aforo}
+                      </span>
+                      <span className="fw-bold text-success">
+                        <i className="fa-solid fa-money-bill me-2"></i>
+                        {ViewDollar(sect.price)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ))}
           </div>
         </div>
         <Accordion defaultActiveKey="0" activeKey={pasoActive}>

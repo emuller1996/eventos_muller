@@ -9,6 +9,7 @@ import OrdenesRouters from "./ordenes.routes.js";
 import PuntoVentaRouters from "./punto_venta.routes.js";
 import UsuariosRouters from "./usuarios.routes.js";
 import AuthRouters from "./auth.routes.js";
+import DashboardRouters from "./dashboard.routes.js";
 import { crearElasticByType } from "../utils/index.js";
 
 // Importar todos los routers;
@@ -28,15 +29,15 @@ router.use("/ordenes", OrdenesRouters);
 router.use("/punto_venta", PuntoVentaRouters);
 router.use("/usuarios", UsuariosRouters);
 router.use("/auth", AuthRouters);
+router.use("/dash", DashboardRouters);
 
 router.get("/test", async (req, res) => {
   try {
     /* const searchResult = await client.get({index:"test"}) */
-    
 
-    return res.json({ message: "ss", client, /* searchResult */ });
+    return res.json({ message: "ss", client /* searchResult */ });
   } catch (error) {
-    return res.json({ message: "ss", error:error.message });
+    return res.json({ message: "ss", error: error.message });
   }
 });
 

@@ -1,10 +1,21 @@
 /* eslint-disable prettier/prettier */
 
 import React, { useEffect, useRef } from 'react'
-import { AreaSeries, BarSeries, BaselineSeries, createChart } from 'lightweight-charts';
+import { AreaSeries, createChart } from 'lightweight-charts'
+import PropTypes from 'prop-types'
 
-const ChartSales30days = ({data}) => {
+const ChartSales30days = ({ data, formatCop = false }) => {
+  ChartSales30days.propTypes = {
+    data: PropTypes.array,
+    formatCop: PropTypes.bool,
+  }
   const chartContainerRef = useRef(null)
+
+  const currentLocale = window.navigator.languages[0]
+  const myPriceFormatter = Intl.NumberFormat(currentLocale, {
+    style: 'currency',
+    currency: 'COP', // Currency for data points
+  }).format
 
   useEffect(() => {
     const chart = createChart(chartContainerRef.current, {
@@ -19,42 +30,22 @@ const ChartSales30days = ({data}) => {
         horzLines: { color: '#e1e1e1' },
       },
     })
+    chart.applyOptions({
+      localization: formatCop
+        ? {
+            priceFormatter: myPriceFormatter,
+          }
+        : {},
+    })
     const areaSeries = chart.addSeries(AreaSeries, {
-      lineColor: '#2962FF',
-      topColor: '#2962FF',
-      bottomColor: 'rgba(41, 98, 255, 0.28)',
+      lineColor: '#7429ff',
+      topColor: '#9829ff',
+      bottomColor: 'rgba(80, 41, 255, 0.28)',
     })
 
-    /* const data = [
-      { value: 0, time: 1642425322 },
-      { value: 8, time: 1642511722 },
-      { value: 10, time: 1642598122 },
-      { value: 20, time: 1642684522 },
-      { value: 3, time: 1642770922 },
-      { value: 43, time: 1642857322 },
-      { value: 41, time: 1642943722 },
-      { value: 43, time: 1643030122 },
-      { value: 56, time: 1643116522 },
-      { value: 46, time: 1643202922 },
-    ] */
     areaSeries.setData(data)
 
     chart.timeScale().fitContent()
-
-    /* const areaSeries = chart.addSeries({
-      topColor: 'rgba(33, 150, 243, 0.5)', // Color de área
-      bottomColor: 'rgba(33, 150, 243, 0.0)',
-      lineColor: 'rgba(33, 150, 243, 1)',
-      lineWidth: 2,
-    })
-
-    areaSeries.setData([
-      { time: '2024-02-01', value: 120 },
-      { time: '2024-02-02', value: 125 },
-      { time: '2024-02-03', value: 130 },
-      { time: '2024-02-04', value: 110 },
-      { time: '2024-02-05', value: 140 },
-    ]) */
 
     return () => chart.remove()
   }, [])

@@ -5,7 +5,7 @@ import PuntosVentaPage from './views/puntos-venta/PuntosVentaPage'
 import UsuariosPage from './views/usuarios/UsuariosPage'
 const EventosPage = React.lazy(() => import('./views/eventos/EventosPage'))
 const FuncionesPage = React.lazy(() => import('./views/funciones/FuncionesPage'))
-const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
+const DashboardTwo = React.lazy(() => import('./views/dashboard/DashboardTwo'))
 const RecintoPage = React.lazy(() => import('./views/recintos/RecintoPage'))
 const EsquemaPage = React.lazy(() => import('./views/recintos/esquemas/EsquemaPage'))
 const FormEsquemaPage = React.lazy(
@@ -15,7 +15,7 @@ const EventoDetallePage = React.lazy(() => import('./views/eventos/EventoDetalle
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  { path: '/dashboard', name: 'Dashboard', element: DashboardTwo },
   { path: '/eventos', name: 'Eventos', element: EventosPage },
   { path: '/eventos/det/:idEvento', name: 'Evento Detalle', element: EventoDetallePage },
   { path: '/funciones', name: 'Funciones', element: FuncionesPage },

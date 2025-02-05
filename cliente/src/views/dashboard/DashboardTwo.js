@@ -54,21 +54,43 @@ const DashboardTwo = () => {
 
   return (
     <>
-      <CCard className="mb-4">
-        <div className="p-2">
-          <span>Ventas los ultimos 30 dias</span>
-          {dataDetalle && (
-            <ChartSales30days
-              data={dataDetalle.map((c) => {
-                return {
-                  time: new Date(c.key).toISOString().split('T')[0],
-                  value: c.doc_count,
-                }
-              })}
-            />
-          )}
+      <div className="row">
+        <div className="col-md-6">
+          <CCard className="mb-4">
+            <div className="p-2">
+              <span>Ordenes Generadas los ultimos 30 dias</span>
+              {dataDetalle && (
+                <ChartSales30days
+                  data={dataDetalle.map((c) => {
+                    return {
+                      time: new Date(c.key).toISOString().split('T')[0],
+                      value: c.doc_count,
+                    }
+                  })}
+                />
+              )}
+            </div>
+          </CCard>
         </div>
-      </CCard>
+        <div className="col-md-6">
+          <CCard className="mb-4">
+            <div className="p-2">
+              <span>Ventas los ultimos 30 dias</span>
+              {dataDetalle && (
+                <ChartSales30days
+                  data={dataDetalle.map((c) => {
+                    return {
+                      time: new Date(c.key).toISOString().split('T')[0],
+                      value: c.suma.value,
+                    }
+                  })}
+                  formatCop
+                />
+              )}
+            </div>
+          </CCard>
+        </div>
+      </div>
     </>
   )
 }

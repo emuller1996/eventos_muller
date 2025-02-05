@@ -4,6 +4,12 @@ import { client } from "../db.js";
 const DashboardRouters = Router();
 
 DashboardRouters.get("/sales", async (req, res) => {
+  
+  const currentDate = Date.now();
+
+  // Timestamp de hace 30 días (restamos 30 días en milisegundos)
+  const thirtyDaysAgo = currentDate - 30 * 24 * 60 * 60 * 1000;
+
   try {
     const result = await client.search({
       index: "eventosmull",
@@ -22,8 +28,8 @@ DashboardRouters.get("/sales", async (req, res) => {
               {
                 range: {
                   createdTime: {
-                    gte: 1736048592000,
-                    lte: 1738727022000,
+                    gte: thirtyDaysAgo,
+                    lte: currentDate,
                   },
                 },
               },

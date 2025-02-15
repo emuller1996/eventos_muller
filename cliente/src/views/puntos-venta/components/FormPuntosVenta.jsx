@@ -10,7 +10,15 @@ import {
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import PropTypes from 'prop-types'
+import L from 'leaflet'
 
+// Definir el icono personalizado
+const customIcon = new L.Icon({
+  iconUrl: 'https://eventos.esmuller.cloud/favicon.png', // Cambia esto por la ruta de tu imagen
+  iconSize: [42, 42], // Tamaño del icono
+  iconAnchor: [16, 32], // Punto de anclaje
+  popupAnchor: [0, -32], // Punto de anclaje del popup
+})
 function LocationPicker({ setCoordinates }) {
   LocationPicker.propTypes = {
     setCoordinates: PropTypes.func,
@@ -136,7 +144,9 @@ export default function FormPuntosVenta({ onHide, getAllPuntosVenta, puntoVenta 
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               />
-              {coordinates && <Marker position={[coordinates.lat, coordinates.lng]} />}
+              {coordinates && (
+                <Marker icon={customIcon} position={[coordinates.lat, coordinates.lng]} />
+              )}
               <LocationPicker setCoordinates={setCoordinates} />
             </MapContainer>
           </div>

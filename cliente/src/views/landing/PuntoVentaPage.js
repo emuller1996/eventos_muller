@@ -5,6 +5,15 @@ import { usePuntoVenta } from '../../hooks/usePuntoVenta'
 import { MapContainer, TileLayer, Marker, useMapEvents, Popup } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import PropTypes from 'prop-types'
+import L from 'leaflet'
+
+// Definir el icono personalizado
+const customIcon = new L.Icon({
+  iconUrl: 'https://eventos.esmuller.cloud/favicon.png', // Cambia esto por la ruta de tu imagen
+  iconSize: [42, 42], // Tamaño del icono
+  iconAnchor: [16, 32], // Punto de anclaje
+  popupAnchor: [0, -32], // Punto de anclaje del popup
+})
 
 const PuntoVentaPage = () => {
   const { getAllPuntoVenta, data: ListPuntoVenta, loading, abortController } = usePuntoVenta()
@@ -78,7 +87,10 @@ const PuntoVentaPage = () => {
                           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         />
                         {punto.coordinates && (
-                          <Marker position={[punto.coordinates.lat, punto.coordinates.lng]}>
+                          <Marker
+                            icon={customIcon}
+                            position={[punto.coordinates.lat, punto.coordinates.lng]}
+                          >
                             <Popup>
                               {punto?.name}, {punto?.address}
                             </Popup>

@@ -3,7 +3,8 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { Link, useParams } from 'react-router-dom'
+import toast from 'react-hot-toast'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 export default function FormEsquemaPage() {
   const { idRecinto } = useParams()
@@ -34,6 +35,7 @@ export default function FormEsquemaPage() {
     formState: { errors },
   } = useForm()
 
+  const navigate = useNavigate()
   const onSubmit = (data) => {
     console.log(data)
 
@@ -157,8 +159,6 @@ export default function FormEsquemaPage() {
           <i className="fa-solid fa-angles-left me-2"></i>Atras a Recintos
         </Link>
       </div> */}
-      EsquemaPage
-      {idRecinto}
       <div>
         <Form.Group className="mb-3 w-100" controlId="name">
           <Form.Label>Nombre Esquema</Form.Label>
@@ -192,6 +192,8 @@ export default function FormEsquemaPage() {
                       image: base64Image ?? null,
                     })
                     console.log(r.data)
+                    toast.success('Se creo el esquema correctamente.')
+                    navigate(`/d/recintos/${idRecinto}/esquemas`)
                   } catch (error) {
                     console.log(error)
                   }

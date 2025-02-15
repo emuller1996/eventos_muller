@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react'
 import { Form } from 'react-bootstrap'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useRecintos } from '../../../hooks/useRecintos'
 
 export default function EsquemaPage() {
@@ -13,10 +13,12 @@ export default function EsquemaPage() {
     getEsquemasByRecinto(idRecinto)
   }, [idRecinto])
 
+    
+  
   return (
     <div>
       <div className="d-flex justify-content-between">
-        <Link to={`/recintos`} className="btn btn-danger text-white ">
+        <Link to={`/d/recintos`} className="btn btn-danger text-white ">
           <i className="fa-solid fa-angles-left me-2"></i>Atras a Recintos
         </Link>
         <Link to={`crear`} className="btn btn-primary text-white ">

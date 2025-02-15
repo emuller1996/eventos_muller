@@ -2,9 +2,14 @@
 import React from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import axios from "axios"
+import axios from 'axios'
 import toast from 'react-hot-toast'
+import PropTypes from 'prop-types'
 export default function FormRecinto({ onHide, getAllRecintos }) {
+  FormRecinto.propTypes = {
+    onHide: PropTypes.func,
+    getAllRecintos: PropTypes.func,
+  }
   const {
     register,
     handleSubmit,
@@ -12,19 +17,17 @@ export default function FormRecinto({ onHide, getAllRecintos }) {
     formState: { errors },
   } = useForm()
 
-  const onSubmit = async(data) => {
+  const onSubmit = async (data) => {
     console.log(data)
     try {
-      const result = await axios.post("/recinto",data)
-      console.log(result);
+      const result = await axios.post('/recinto', data)
+      console.log(result)
       await getAllRecintos()
       onHide()
-      toast.success("Recinto Creado.")
+      toast.success('Recinto Creado.')
     } catch (error) {
-      console.log(error);
-      
+      console.log(error)
     }
-  
   }
 
   return (

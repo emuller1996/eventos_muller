@@ -11,6 +11,8 @@ import UsuariosRouters from "./usuarios.routes.js";
 import AuthRouters from "./auth.routes.js";
 import DashboardRouters from "./dashboard.routes.js";
 import { crearElasticByType } from "../utils/index.js";
+import PrestamoRouters from "./prestamos.routes.js";
+import PagosRouters from "./pagos.routes.js";
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -21,6 +23,9 @@ const router = Router();
 // Ejemplo: router.use('/auth', authRouter);
 
 router.use("/clientes", ClienteRouters);
+router.use("/prestamos", PrestamoRouters);
+router.use("/pagos", PagosRouters);
+
 router.use("/recinto", RecintosRouters);
 router.use("/eventos", EventosRouters);
 router.use("/funcion", FuncionesRouters);

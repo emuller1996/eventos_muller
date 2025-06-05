@@ -12,10 +12,15 @@ import { QRCodeCanvas } from 'qrcode.react'
 import { jsPDF } from 'jspdf'
 import { useState } from 'react'
 import { useRef } from 'react'
+import QrReader from 'react-qr-scanner'
 
 export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionById, estado }) {
   const { idFuncion } = useParams()
   const qrRef = useRef(null)
+
+  const [result, setResult] = useState('')
+  const [error, setError] = useState(null)
+  const [facingMode, setFacingMode] = useState('environment')
   const generatePDF = () => {
     // Crear nuevo documento PDF
     const doc = new jsPDF()
@@ -115,13 +120,26 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
 
   console.log(Object.keys(Object.groupBy(boletos, ({ section }) => section)))
   const [show, setShow] = useState(false)
+  const [showScan, setShowScan] = useState(false)
   const [showData, setShowData] = useState(null)
+  const [showCamera, setShowCamera] = useState(false)
 
   return (
     <div
       className="py-2 bg-white border-start  border-end border-bottom rounded-bottom  "
       style={{ minHeight: '600px' }}
     >
+      <div className="px-2">
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => {
+            setShowScan(true)
+          }}
+        >
+          Scan
+        </button>
+      </div>
       <div className="px-2">
         <div className="my-2 d-flex gap-2">
           {estado &&
@@ -163,13 +181,13 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
             <Modal.Title>QR BOLETO</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <div className='text-center'>
+            <div className="text-center">
               <p>{showData?._id}</p>
               <p>{showData?.section}</p>
               <p>{showData?.num_ticket}</p>
               <p>{showData?.order_num_ticket}</p>
             </div>
-            <div className='text-center' ref={qrRef}>
+            <div className="text-center" ref={qrRef}>
               <QRCodeCanvas value={showData?._id} size={300} />
             </div>
             Woohoo, you are reading this text in a modal!
@@ -179,6 +197,40 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
               Close
             </Button>
             <Button variant="primary" onClick={generatePDF}>
+              generatePDF
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={showScan} onHide={() => setShowScan(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>LEER BOLETO</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="text-center " style={{ width: '-webkit-fill-available' }}>
+              {showCamera && (
+                <QrReader
+                  style={{ width: '100%' }}
+                  onScan={(result) => {
+                    if (result) {
+                      console.log(result)
+                      setShowCamera(false)
+                    }
+                  }}
+                  onError={(error) => console.log(error?.message)}
+                />
+              )}
+              <button className="btn btn-primary" onClick={() => setShowCamera(!showCamera)}>
+                {showCamera ? 'Stop' : 'Start'}
+              </button>
+              {/* <p>Resultado: {data}</p> */}
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowScan(false)}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={() => {}}>
               generatePDF
             </Button>
           </Modal.Footer>

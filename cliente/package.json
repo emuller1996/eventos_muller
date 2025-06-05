@@ -16,7 +16,7 @@
     "build": "vite build",
     "lint": "eslint \"src/**/*.js\"",
     "serve": "vite preview",
-    "start": "vite"
+    "start": "vite --host"
   },
   "dependencies": {
     "@coreui/chartjs": "^4.0.0",
@@ -34,6 +34,7 @@
     "classnames": "^2.5.1",
     "core-js": "^3.36.1",
     "embla-carousel-react": "^8.5.1",
+    "html2canvas": "^1.4.1",
     "jspdf": "^3.0.1",
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",

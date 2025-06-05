@@ -11,39 +11,19 @@ import {
 } from '../../../services/boleto.services'
 import { useParams } from 'react-router-dom'
 import { Accordion, Button, Modal } from 'react-bootstrap'
-import { QRCodeCanvas } from 'qrcode.react'
-import { jsPDF } from 'jspdf'
 import { useState } from 'react'
-import { useRef } from 'react'
 import QrReader from 'react-qr-scanner'
+import BoletoTicketComponent from './BoletoTicketComponent'
+import PropTypes from 'prop-types'
 
 export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionById, estado }) {
-  const { idFuncion } = useParams()
-  const qrRef = useRef(null)
-
-  const [result, setResult] = useState('')
-  const [error, setError] = useState(null)
-  const [facingMode, setFacingMode] = useState('environment')
-  const generatePDF = () => {
-    // Crear nuevo documento PDF
-    const doc = new jsPDF()
-
-    // Agregar contenido al PDF
-    doc.setFontSize(16)
-    doc.text('Documento con Código QR', 10, 10)
-    doc.setFontSize(12)
-    doc.text('Este documento contiene un código QR generado automáticamente.', 10, 20)
-
-    // Convertir el QR a imagen y agregarlo al PDF
-    const qrCanvas = qrRef.current.querySelector('canvas')
-    const qrImageData = qrCanvas.toDataURL('image/png')
-
-    // Agregar la imagen del QR al PDF (posición x, y, ancho, alto)
-    doc.addImage(qrImageData, 'PNG', 10, 30, 40, 40)
-
-    // Guardar el PDF
-    doc.save('documento-con-qr.pdf')
+  FuncionesBoletosComponen.propTypes = {
+    boletos: PropTypes.array,
+    getBoletosByFuncionById: PropTypes.func,
+    estado: PropTypes.array,
   }
+
+  const { idFuncion } = useParams()
 
   const columns = [
     {
@@ -111,7 +91,7 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
                 setShow(true)
               }}
             >
-              Generate PDF
+              Ver Boleto.
             </button>
           </div>
         )
@@ -145,7 +125,17 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
             setShowScan(true)
           }}
         >
-          Scan
+          Escanear Boletos (Registrar Entrada)
+        </button>
+
+        <button
+          type="button"
+          className="btn btn-info text-white ms-2"
+          onClick={async () => {
+            await getBoletosByFuncionById(idFuncion)
+          }}
+        >
+          Recargar
         </button>
       </div>
       <div className="px-2">
@@ -188,24 +178,12 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
           <Modal.Header closeButton>
             <Modal.Title>QR BOLETO</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <div className="text-center">
-              <p>{showData?._id}</p>
-              <p>{showData?.section}</p>
-              <p>{showData?.num_ticket}</p>
-              <p>{showData?.order_num_ticket}</p>
-            </div>
-            <div className="text-center" ref={qrRef}>
-              <QRCodeCanvas value={showData?._id} size={300} />
-            </div>
-            Woohoo, you are reading this text in a modal!
+          <Modal.Body className="text-center">
+            <BoletoTicketComponent showData={showData} />
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => setShow(false)}>
               Close
-            </Button>
-            <Button variant="primary" onClick={generatePDF}>
-              generatePDF
             </Button>
           </Modal.Footer>
         </Modal>

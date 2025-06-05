@@ -12,13 +12,19 @@ export default function FuncionDetallePage() {
   const { idFuncion } = useParams()
   const [Option, setOption] = useState('general_funcion')
 
-  const { getFuncionById, dataDetalle, dataBoletos, getBoletosByFuncionById,getOrdenesByFuncionById,dataOrdenes } = useFunciones()
+  const {
+    getFuncionById,
+    dataDetalle,
+    dataBoletos,
+    getBoletosByFuncionById,
+    getOrdenesByFuncionById,
+    dataOrdenes,
+  } = useFunciones()
 
   useEffect(() => {
     getFuncionById(idFuncion)
     getBoletosByFuncionById(idFuncion)
     getOrdenesByFuncionById(idFuncion)
-    
   }, [])
 
   return (
@@ -49,15 +55,15 @@ export default function FuncionDetallePage() {
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="funcion_metricas">
-          <i className="fa-solid fa-chart-bar  me-2"></i>Metricas
+            <i className="fa-solid fa-chart-bar  me-2"></i>Metricas
           </Nav.Link>
         </Nav.Item>
       </Nav>
-     
+
       {Option === 'general_funcion' && (
         <FuncionDetalleComponent funcion={dataDetalle && dataDetalle} />
       )}
-      {Option === 'funcion_tickets' && (
+      {Option === 'funcion_tickets' && dataBoletos && (
         <FuncionesBoletosComponen
           getBoletosByFuncionById={getBoletosByFuncionById}
           boletos={dataBoletos && dataBoletos.boletos}

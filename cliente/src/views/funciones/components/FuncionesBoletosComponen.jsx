@@ -7,10 +7,35 @@ import toast from 'react-hot-toast'
 import './FuncionesBoletosComponen.css'
 import { postBoletoDispobileService } from '../../../services/boleto.services'
 import { useParams } from 'react-router-dom'
-import { Accordion } from 'react-bootstrap'
+import { Accordion, Button, Modal } from 'react-bootstrap'
+import { QRCodeCanvas } from 'qrcode.react'
+import { jsPDF } from 'jspdf'
+import { useState } from 'react'
+import { useRef } from 'react'
 
 export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionById, estado }) {
   const { idFuncion } = useParams()
+  const qrRef = useRef(null)
+  const generatePDF = () => {
+    // Crear nuevo documento PDF
+    const doc = new jsPDF()
+
+    // Agregar contenido al PDF
+    doc.setFontSize(16)
+    doc.text('Documento con Código QR', 10, 10)
+    doc.setFontSize(12)
+    doc.text('Este documento contiene un código QR generado automáticamente.', 10, 20)
+
+    // Convertir el QR a imagen y agregarlo al PDF
+    const qrCanvas = qrRef.current.querySelector('canvas')
+    const qrImageData = qrCanvas.toDataURL('image/png')
+
+    // Agregar la imagen del QR al PDF (posición x, y, ancho, alto)
+    doc.addImage(qrImageData, 'PNG', 10, 30, 40, 40)
+
+    // Guardar el PDF
+    doc.save('documento-con-qr.pdf')
+  }
 
   const columns = [
     {
@@ -25,15 +50,15 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
       name: 'Estado',
       selector: (row) => row.status,
       cell: (row) => {
-        let status = ""
-        if(row.status === 'Vendido'){
-          status ='bg-success';
+        let status = ''
+        if (row.status === 'Vendido') {
+          status = 'bg-success'
         }
-        if(row.status === 'Disponible'){
-          status ='bg-info';
+        if (row.status === 'Disponible') {
+          status = 'bg-info'
         }
-        if(row.status === 'En Venta'){
-          status ='bg-warning';
+        if (row.status === 'En Venta') {
+          status = 'bg-warning'
         }
 
         return (
@@ -46,25 +71,38 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
     {
       name: 'Accion',
       selector: (row) => row.status,
-      cell: (row) => (
-        <div>
-          <button
-            disabled={row.status !== 'En Venta'}
-            className="btn btn-sm btn-info"
-            onClick={async () => {
-              try {
-                const res = await postBoletoDispobileService(row._id)
-                await getBoletosByFuncionById(idFuncion)
-                toast.success(res.data.message)
-              } catch (error) {
-                console.log(error)
-              }
-            }}
-          >
-            Poner Disponible
-          </button>
-        </div>
-      ),
+      cell: (row) => {
+        return (
+          <div>
+            <button
+              disabled={row.status !== 'En Venta'}
+              className="btn btn-sm btn-info"
+              onClick={async () => {
+                try {
+                  const res = await postBoletoDispobileService(row._id)
+                  await getBoletosByFuncionById(idFuncion)
+                  toast.success(res.data.message)
+                } catch (error) {
+                  console.log(error)
+                }
+              }}
+            >
+              Poner Disponible
+            </button>
+
+            <button
+              type="button"
+              className="btn btn-primary btn-sm ms-2"
+              onClick={() => {
+                setShowData(row)
+                setShow(true)
+              }}
+            >
+              Generate PDF
+            </button>
+          </div>
+        )
+      },
     },
   ]
 
@@ -76,9 +114,14 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
   }
 
   console.log(Object.keys(Object.groupBy(boletos, ({ section }) => section)))
+  const [show, setShow] = useState(false)
+  const [showData, setShowData] = useState(null)
 
   return (
-    <div className="py-2 bg-white border-start  border-end border-bottom rounded-bottom  " style={{minHeight:"600px"}}>
+    <div
+      className="py-2 bg-white border-start  border-end border-bottom rounded-bottom  "
+      style={{ minHeight: '600px' }}
+    >
       <div className="px-2">
         <div className="my-2 d-flex gap-2">
           {estado &&
@@ -113,33 +156,33 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
               </Accordion.Item>
             </>
           ))}
-          {/* <Accordion.Item eventKey="0">
-            <Accordion.Header>GENERAL</Accordion.Header>
-            <Accordion.Body>
-              <div className='0'>
-
-              <DataTable
-                className="Table_Boletos"
-                striped
-                columns={columns}
-                data={boletos}
-                pagination
-                paginationComponentOptions={paginationComponentOptions}
-                noDataComponent="No hay datos para mostrar"
-              />
-              </div>
-            </Accordion.Body>
-          </Accordion.Item> */}
         </Accordion>
-        {/*  <DataTable
-          className="Table_Boletos"
-          striped
-          columns={columns}
-          data={boletos}
-          pagination
-          paginationComponentOptions={paginationComponentOptions}
-          noDataComponent="No hay datos para mostrar"
-        /> */}
+
+        <Modal show={show} onHide={() => setShow(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>QR BOLETO</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className='text-center'>
+              <p>{showData?._id}</p>
+              <p>{showData?.section}</p>
+              <p>{showData?.num_ticket}</p>
+              <p>{showData?.order_num_ticket}</p>
+            </div>
+            <div className='text-center' ref={qrRef}>
+              <QRCodeCanvas value={showData?._id} size={300} />
+            </div>
+            Woohoo, you are reading this text in a modal!
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShow(false)}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={generatePDF}>
+              generatePDF
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   )

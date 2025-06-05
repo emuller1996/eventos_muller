@@ -5,7 +5,10 @@ import DataTable from 'react-data-table-component'
 import toast from 'react-hot-toast'
 
 import './FuncionesBoletosComponen.css'
-import { postBoletoDispobileService } from '../../../services/boleto.services'
+import {
+  postBoletoAccesoService,
+  postBoletoDispobileService,
+} from '../../../services/boleto.services'
 import { useParams } from 'react-router-dom'
 import { Accordion, Button, Modal } from 'react-bootstrap'
 import { QRCodeCanvas } from 'qrcode.react'
@@ -51,6 +54,7 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
       name: 'Seccion',
       selector: (row) => row.section,
     },
+
     {
       name: 'Estado',
       selector: (row) => row.status,
@@ -72,6 +76,10 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
           </div>
         )
       },
+    },
+    {
+      name: 'status_acces',
+      selector: (row) => row.status_acces,
     },
     {
       name: 'Accion',
@@ -211,12 +219,23 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
               {showCamera && (
                 <QrReader
                   facingMode={'front'}
-                 /*  legacyMode={true} */
+                  /*  legacyMode={true} */
                   style={{ width: '100%' }}
-                  onScan={(result) => {
+                  delay={500}
+                  onScan={async (result) => {
                     if (result) {
-                      console.log(result)
-                      setShowCamera(false)
+                      try {
+                        console.log(result)
+                        setShowCamera(false)
+                        const res = await postBoletoAccesoService(result.text)
+                        console.log(res)
+                        toast.success('Se Registro El Acceso Correctamente.')
+                        await getBoletosByFuncionById(idFuncion)
+                      } catch (error) {
+                        console.log(error)
+                        toast.error(error.response.data.message)
+                        setShowCamera(false)
+                      }
                     }
                   }}
                   onError={(error) => console.log(error?.message)}

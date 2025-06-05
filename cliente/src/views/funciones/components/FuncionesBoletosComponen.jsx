@@ -210,6 +210,8 @@ export default function FuncionesBoletosComponen({ boletos, getBoletosByFuncionB
             <div className="text-center " style={{ width: '-webkit-fill-available' }}>
               {showCamera && (
                 <QrReader
+                  facingMode={'front'}
+                 /*  legacyMode={true} */
                   style={{ width: '100%' }}
                   onScan={(result) => {
                     if (result) {

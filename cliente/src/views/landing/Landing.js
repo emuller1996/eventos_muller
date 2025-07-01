@@ -40,31 +40,21 @@ const Landing = () => {
         <div className="product-device shadow-sm d-none d-md-block"></div>
         <div className="product-device product-device-2 shadow-sm d-none d-md-block"></div>
       </div>
-
-      <div className="embla">
-        <div className="embla__viewport" ref={emblaRef}>
-          <div className="embla__container">
-            <div className="embla__slide">
-              <p>MEJORE EVENTOS Y PRECIOS</p>
-            </div>
-            <div className="embla__slide">Slide 2</div>
-            <div className="embla__slide">Slide 3</div>
-          </div>
-        </div>
-        <button className="embla__prev" onClick={scrollPrev}>
-          Prev
-        </button>
-        <button className="embla__next" onClick={scrollNext}>
-          Next
-        </button>
-      </div>
       <div className="album py-5 bg-light">
         <div className="container">
           <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {ListFunciones &&
               ListFunciones.map((fun) => (
                 <div key={fun._id} className="col">
-                  <div className="card  h-100 shadow-sm">
+                  <div className="card  h-100 shadow-sm position-relative">
+                    {fun.status && (
+                      <div className="position-absolute top-0 end-0">
+                        <span className="badge text-bg-primary fs-6 mt-2 me-2 shadow text-uppercase">
+                          {' '}
+                          {fun.status.replace('_', ' ')}
+                        </span>
+                      </div>
+                    )}
                     <img
                       style={{ maxHeight: '300px' }}
                       src={fun.image}
@@ -92,6 +82,23 @@ const Landing = () => {
               ))}
           </div>
         </div>
+      </div>
+      <div className="embla">
+        <div className="embla__viewport" ref={emblaRef}>
+          <div className="embla__container">
+            <div className="embla__slide">
+              <p>MEJORE EVENTOS Y PRECIOS</p>
+            </div>
+            <div className="embla__slide">Slide 2</div>
+            <div className="embla__slide">Slide 3</div>
+          </div>
+        </div>
+        <button className="embla__prev" onClick={scrollPrev}>
+          Prev
+        </button>
+        <button className="embla__next" onClick={scrollNext}>
+          Next
+        </button>
       </div>
       <div className="container mt-5">
         <h3>TEST EVENTOS</h3>

@@ -39,6 +39,40 @@ FuncionesRouters.get("/:id", async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 });
+FuncionesRouters.patch("/:id", async (req, res) => {
+  try {
+    const dataEventRe = req.body;
+    const FuncionCreate = {
+      name: dataEventRe.name_function,
+      start_date: dataEventRe.start_date_function,
+      end_date: dataEventRe.end_date_function,
+      description: dataEventRe.description_function,
+      status: dataEventRe.status,
+      image: dataEventRe.image,
+    };
+    const response = await updateElasticByType(req.params.id, FuncionCreate);
+    return res
+      .status(201)
+      .json({ message: "Funcion Actualizada.", response, dataEventRe });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+FuncionesRouters.delete("/:id", async (req, res) => {
+  try {
+    const dataEventRe = req.body;
+    const FuncionCreate = {
+      type: "funcion_borrada",
+    };
+    const response = await updateElasticByType(req.params.id, FuncionCreate);
+    return res
+      .status(201)
+      .json({ message: "Funcion Borrada.", response, dataEventRe });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
 
 FuncionesRouters.post("/get/:id/boletos/", async (req, res) => {
   try {

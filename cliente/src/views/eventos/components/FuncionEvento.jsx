@@ -1,26 +1,33 @@
 /* eslint-disable prettier/prettier */
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { Modal } from 'react-bootstrap'
+import { Link, useParams } from 'react-router-dom'
+import { Button, ButtonGroup, Modal } from 'react-bootstrap'
 import FormEventoFuncion from './FormEventoFuncion'
-import "./FuncionEvento.css"
+import './FuncionEvento.css'
 
 export default function FuncionEvento({ funciones, getFuncionesByEvento }) {
   FuncionEvento.propTypes = {
     funciones: PropTypes.array,
     getFuncionesByEvento: PropTypes.func,
   }
+  const [FuncionSeleciona, setFuncionSeleciona] = useState(null)
 
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
+  const { idEvento } = useParams()
 
   return (
     <div className="py-3 bg-white border-start  border-end border-bottom rounded-bottom">
       <div className="mb-3 text-center">
-        <button className="btn btn-primary" onClick={handleShow}>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            setShow(true)
+            setFuncionSeleciona(null)
+          }}
+        >
           {' '}
           <i className="fa-solid fa-plus me-2"></i> Crear Funcion
         </button>
@@ -43,9 +50,20 @@ export default function FuncionEvento({ funciones, getFuncionesByEvento }) {
                   </p>
                 </div>
                 <div className="flex-shrink-1 col-2">
-                  <Link to={`/d/funcion/det/${fun?._id}/`} className="btn btn-primary">
-                    <i className="fa-solid fa-eye me-2"></i>Ver{' '}
-                  </Link>
+                  <ButtonGroup>
+                    <Link to={`/d/funcion/det/${fun?._id}/`} className="btn btn-primary">
+                      <i className="fa-solid fa-eye"></i>
+                    </Link>
+                    <Button
+                      onClick={() => {
+                        setFuncionSeleciona(fun)
+                        setShow(true)
+                      }}
+                      variant="info text-white"
+                    >
+                      <i className="fa-solid fa-pen-to-square"></i>
+                    </Button>
+                  </ButtonGroup>
                 </div>
               </div>
             </div>
@@ -54,7 +72,12 @@ export default function FuncionEvento({ funciones, getFuncionesByEvento }) {
 
       <Modal backdrop={'static'} size="lg" centered show={show} onHide={handleClose}>
         <Modal.Body>
-          <FormEventoFuncion onHide={handleClose} getAllFuncion={getFuncionesByEvento} />
+          <FormEventoFuncion
+            idEvento={idEvento}
+            onHide={handleClose}
+            Funcion={FuncionSeleciona}
+            getAllFuncion={getFuncionesByEvento}
+          />
         </Modal.Body>
       </Modal>
     </div>

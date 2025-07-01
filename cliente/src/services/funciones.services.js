@@ -22,3 +22,11 @@ export const getOrdenesByFuncionByidService = (id) => {
 export const getBoletoBySeccionByidService = (id,data) => {
   return axios.post(`/funcion/get/${id}/boletos`,data)
 }
+
+export const patchFuncionByIdService = (id,data) => {
+  return axios.patch(`/funcion/${id}/`,data)
+}
+
+export const deleteFuncionByIdService = (id) => {
+  return axios.delete(`/funcion/${id}/`)
+}
